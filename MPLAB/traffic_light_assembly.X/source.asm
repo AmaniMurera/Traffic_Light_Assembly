@@ -15,9 +15,9 @@
  
     RP1 equ 06 ; bit 6 of status register is named RP1
  
-    PORTB equ 06h ;bank0
+    PORTB equ 06h ;PORTB is symbolic address
     
-    TRISB equ 86h ;bank1 TRISB determnine if PORTB is input or output
+    TRISB equ 86h ;TRISB determnine if PORTB is input or output
  
     COUNTER equ 20h ;the counter for create a delay
  
@@ -31,7 +31,7 @@
     CLRF PORTB
     
     ;switch to bank 1 to access TRISB register
-    BSF STATUS,RP0;RP0=1 to select bank1
+    BSF STATUS,RP0 ;RP0=1 and RP1=0 to select bank1
     
     CLRF TRISB 
     	
@@ -40,7 +40,7 @@
     
     ;switch back to bank0 for working with portB
     BCF STATUS,RP0 ;RP0=0
-BEGIN MOVLW 0x01
+BEGIN MOVLW 0x01 ; BEGIN is a label
      MOVWF PORTB ;turn on only first pin on PORTB
 	
       ;delay
@@ -68,7 +68,7 @@ Loop2 DECFSZ COUNTER,1  ; decrement by 1,until 0
       MOVLW 0xff  
       MOVWF COUNTER ; setting the counter  
      
-Loop3 DECFSZ COUNTER,1 ; decrement by 1
+Loop3 DECFSZ COUNTER,1 ; decrement by 1, until 0
       GOTO Loop3 ; if counter 1 is  zero then carry on
  
       GOTO BEGIN
